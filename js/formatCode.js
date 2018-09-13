@@ -45,6 +45,8 @@ function submit() {
 		$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('https://paiza.io/api' + urlPath + '.json') + '&callback=?', function(data) {
 			parseProject(JSON.parse(data.contents));
 		});
+	} else {
+		alert("You need to fill out all the inputs, idiot.");
 	}
 }
 
