@@ -90,6 +90,7 @@ function makePdf(projectInfo) {
 			},
 			body: {
 				font: 'courier',
+				preserveLeadingSpaces: true,
 				fontSize: 10
 			}
 		},
