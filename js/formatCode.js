@@ -24,8 +24,17 @@ submitButton.addEventListener('click', submit);
 function submit() {
 	if (nameInput.value !== '' && blockInput.value !== '' && assignmentNumberInput.value !== '' && urlInput.value !== '') {
 		var anchor = document.createElement('a');
-		anchor.href = urlInput.value;
-		var urlPath = anchor.pathname;
+
+		var url;
+
+		if (!(/^http.*/.test(urlInput.value))) {
+			url = "https://" + urlInput.value;
+		} else {
+			url = urlInput.value;
+		}
+		anchor.href = url;
+
+		urlPath = anchor.pathname;
 		if (anchor.host !== "paiza.io") {
 			alert("Are you really that stupid? You need to enter a paiza.io URL.");
 			return;
