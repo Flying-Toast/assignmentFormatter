@@ -7,15 +7,15 @@ var submitButton = document.querySelector('#submitButton');
 pdfMake.fonts = {
 	droidSerif: {
 		normal: 'droidSerif.ttf',
-		bold: 'droidSerif.ttf',
-		italics: 'droidSerif.ttf',
-		bolditalics: 'droidSerif.ttf'
+		bold: 'droidSerifBold.ttf',
+		italics: 'droidSerifItalic.ttf',
+		bolditalics: 'droidSerifBoldItalic.ttf'
 	},
 	courier: {
 		normal: 'courier.ttf',
-		bold: 'courier.ttf',
-		italics: 'courier.ttf',
-		bolditalics: 'courier.ttf'
+		bold: 'courierBold.ttf',
+		italics: 'courierItalic.ttf',
+		bolditalics: 'courierBoldItalic.ttf'
 	}
 }
 
@@ -68,13 +68,13 @@ function makePdf(projectInfo) {
 			style: 'header'
 		}, {
 			text: "\nMY CODE:",
-			style: 'body'
+			style: ['body', 'label']
 		}, {
 			text: '\n' + projectInfo.source,
 			style: 'body'
 		}, {
 			text: "\nRESULTS:",
-			style: 'body'
+			style: ['body', 'label']
 		}, {
 			text: '\n' + projectInfo.output,
 			style: 'body'
@@ -82,6 +82,9 @@ function makePdf(projectInfo) {
 		styles: {
 			header: {
 				fontSize: 18
+			},
+			label: {
+				bold: true
 			},
 			body: {
 				font: 'courier',
