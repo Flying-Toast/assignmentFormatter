@@ -26,7 +26,7 @@ function submit() {
 		var anchor = document.createElement('a');
 		anchor.href = urlInput.value;
 		var urlPath = anchor.pathname;
-		$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('https:\//paiza.io/api' + urlPath + '.json') + '&callback=?', function(data) {
+		$.getJSON('http:\//www.whateverorigin.org/get?url=' + encodeURIComponent('https:\//paiza.io/api' + urlPath + '.json') + '&callback=?', function(data) {
 			parseProject(JSON.parse(data.contents));
 		});
 	}
