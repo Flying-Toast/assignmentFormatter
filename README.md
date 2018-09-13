@@ -1,2 +1,2 @@
 # assignmentFormatter
-formats programming homework assignmets
+formats programming homework assignments
