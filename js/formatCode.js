@@ -11,11 +11,11 @@ pdfMake.fonts = {
 		italics: 'droidSerif.ttf',
 		bolditalics: 'droidSerif.ttf'
 	},
-	sourcecodepro: {
-		normal: 'sourcecodepro.ttf',
-		bold: 'sourcecodepro.ttf',
-		italics: 'sourcecodepro.ttf',
-		bolditalics: 'sourcecodepro.ttf'
+	courier: {
+		normal: 'courier.ttf',
+		bold: 'courier.ttf',
+		italics: 'courier.ttf',
+		bolditalics: 'courier.ttf'
 	}
 }
 
@@ -48,32 +48,28 @@ function makePdf(projectInfo) {
 
 	var docDefinition = {
 		content: [{
-			text: projectInfo.header + '\n\n',
+			text: projectInfo.header,
 			style: 'header'
 		}, {
-			text: "Source:",
-			style: 'label'
+			text: "\nMY CODE:",
+			style: 'body'
 		}, {
-			text: "\n" + projectInfo.source,
-			style: 'source'
+			text: '\n' + projectInfo.source,
+			style: 'body'
 		}, {
-			text: "\nOutput:",
-			style: 'label'
+			text: "\nRESULTS:",
+			style: 'body'
 		}, {
-			text: "\n" + projectInfo.output,
-			style: 'source'
+			text: '\n' + projectInfo.output,
+			style: 'body'
 		}],
 		styles: {
 			header: {
-				fontSize: 24,
+				fontSize: 18
 			},
-			source: {
-				font: 'sourcecodepro',
-				margin: [15, 0, 0, 0],
+			body: {
+				font: 'courier',
 				fontSize: 10
-			},
-			label: {
-				fontSize: 12
 			}
 		},
 		defaultStyle: {
