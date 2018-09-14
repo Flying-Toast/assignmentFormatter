@@ -4,48 +4,135 @@
 		<meta charset="utf-8">
 		<script src="js/libs.js"></script>
 		<script src="js/vfs_fonts.js"></script>
+		<link rel="stylesheet" href="media/fonts/fonts.css">
 		<title>Programming Homework Formatter</title>
-		<style></style>
+		<style>
+			body {
+				margin: 0;
+			}
+
+			body {
+				background-color: #ded9d9;
+				font-family: arcon;
+			}
+
+			a {
+				text-decoration: none;
+				color: #415e8a;
+			}
+
+			.input {
+				margin-top: 5px;
+				margin-bottom: 5px;
+			}
+			label {
+				display: inline-block;
+				width: 150px;
+				margin-right: 20px;
+			}
+
+			#assignmentNumberInput {
+				width: 5ch;
+			}
+
+			#form {
+				padding: 30px 13px;
+				border-radius: 5px;
+				background-color: #55acb9;
+				display: inline-block;
+				width: auto;
+			}
+
+			input[type="number"],
+			input[type="text"] {
+				border: none;
+				padding: 5px 7px;
+			}
+
+			.centerChildren {
+				text-align: center;
+			}
+
+			#submitButton {
+				margin-top: 20px;
+			}
+
+			#nameInput {
+				width: 20ch;
+			}
+
+			#githubLink {
+				margin-top: 10px;
+				text-align: right;
+			}
+
+			button {
+				cursor: pointer;
+				border: none;
+				padding: 5px 8px;
+				border-radius: 3px;
+			}
+
+			#submitButton {
+				background-color: #063185;
+				color: white;
+			}
+
+			#submitButton:hover {
+				background-color: #0b3994;
+			}
+
+			#wrapper {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translateY(-50%) translateX(-50%);
+			}
+		</style>
 	</head>
 	<body>
+		<div id="wrapper">
+			<div id='form'>
 
-		<div id='inputs'>
+				<div class="input">
+					<label for="nameInput">Name</label>
+					<input type="text" id="nameInput" placeholder="Firstname Lastname" value="">
+				</div>
 
-			<div class="input">
-				<label for="nameInput">Name:</label>
-				<input type="text" id="nameInput" placeholder="Firstname Lastname" value="">
+				<div class="input">
+					<label for="blockInput">Block</label>
+					<select id="blockInput">
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+						<option value="E">E</option>
+						<option value="F">F</option>
+						<option value="G">G</option>
+					</select>
+				</div>
+
+				<div class="input">
+					<label for="assignmentNumberInput">Assignment #</label>
+					<input id='assignmentNumberInput' type="number" value="">
+				</div>
+
+				<div class="input">
+					<label for="urlInput">Paiza.io URL</label>
+					<input id='urlInput' type="text" placeholder="https://paiza.io/projects/xxxx" value="">
+				</div>
+
+				<div class="centerChildren">
+					<button id='submitButton'>Format Assignment</button>
+				</div>
+
 			</div>
 
-			<div class="input">
-				<label for="blockInput">Block:</label>
-				<select id="blockInput">
-					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="C">C</option>
-					<option value="D">D</option>
-					<option value="E">E</option>
-					<option value="F">F</option>
-					<option value="G">G</option>
-				</select>
-			</div>
-
-			<div class="input">
-				<label for="assignmentNumberInput">Assignment Number:</label>
-				<input id='assignmentNumberInput' type="number" value="">
-			</div>
-
-			<div class="input">
-				<label for="urlInput">Paiza.io URL:</label>
-				<input id='urlInput' type="text" placeholder="https://paiza.io/projects/xxxx" value="">
-			</div>
-
-			<button id='submitButton'>Format Assignment</button>
-			<div id="githubLinkWrapper">
+			<div id="githubLink">
 				<span>Source on</span>
-				<a href="https://github.com/Flying-Toast/assignmentFormatter" id="githubLink" target="_blank">GitHub</a>
+				<a href="https://github.com/Flying-Toast/assignmentFormatter" target="_blank">GitHub</a>
 			</div>
 		</div>
-
 		<script src='js/formatCode.js'></script>
 	</body>
 </html>

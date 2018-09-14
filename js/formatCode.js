@@ -17,7 +17,7 @@ pdfMake.fonts = {
 		italics: 'courierItalic.ttf',
 		bolditalics: 'courierBoldItalic.ttf'
 	}
-}
+};
 
 submitButton.addEventListener('click', submit);
 
