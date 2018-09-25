@@ -3,6 +3,7 @@ var blockInput = document.querySelector('#blockInput');
 var assignmentNumberInput = document.querySelector('#assignmentNumberInput');
 var urlInput = document.querySelector('#urlInput');
 var submitButton = document.querySelector('#submitButton');
+var loadingDiv = document.querySelector('#loadingDiv');
 
 pdfMake.fonts = {
 	droidSerif: {
@@ -42,10 +43,11 @@ function submit() {
 			alert("Are you sure that you compiled at least once? (press the green \"Run\" button). The URL should be in the format paiza.io/projects/xxxx");
 			return;
 		}
-
+		loadingDiv.style.display = 'block';
 		var request = new XMLHttpRequest();
 		request.open('GET', 'https://cors-anywhere.herokuapp.com/https://paiza.io/api' + urlPath + '.json');
 		request.onload = request.onerror = function() {
+			loadingDiv.style.display = 'none';
 			parseProject(JSON.parse(request.responseText));
 		};
 		request.send();
@@ -58,6 +60,9 @@ function submit() {
 function parseProject(project) {
 	if (project.build_result !== "success") {
 		alert("You need to fix the errors in your code and try again.");
+		return;
+	} else if (project.build_result === undefined) {
+		alert("Invalid URL.");
 		return;
 	}
 	var projectInfo = {};
