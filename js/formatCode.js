@@ -36,23 +36,23 @@ function submit() {
 
 		urlPath = anchor.pathname;
 		if (anchor.host !== "paiza.io") {
-			alert("Are you really that stupid? You need to enter a paiza.io URL.");
+			alert("You need to enter a valid paiza.io URL.");
 			return;
 		} else if (!(/^\/projects\/[^/]*$/.test(urlPath))) {
-			alert("I've met 2 year olds that are smarter than you. Are you sure that you compiled at least once? The URL should be in the format paiza.io/projects/xxxx");
+			alert("Are you sure that you compiled at least once? (press the green \"Run\" button). The URL should be in the format paiza.io/projects/xxxx");
 			return;
 		}
 		$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('https://paiza.io/api' + urlPath + '.json') + '&callback=?', function(data) {
 			parseProject(JSON.parse(data.contents));
 		});
 	} else {
-		alert("You need to fill out all the inputs, idiot.");
+		alert("You need to fill out all the inputs.");
 	}
 }
 
 function parseProject(project) {
 	if (project.build_result !== "success") {
-		alert("Your code sucks. You need to fix the errors and try again.");
+		alert("You need to fix the errors in your code and try again.");
 		return;
 	}
 	var projectInfo = {};
