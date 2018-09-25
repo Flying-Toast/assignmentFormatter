@@ -42,9 +42,14 @@ function submit() {
 			alert("Are you sure that you compiled at least once? (press the green \"Run\" button). The URL should be in the format paiza.io/projects/xxxx");
 			return;
 		}
-		$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('https://paiza.io/api' + urlPath + '.json') + '&callback=?', function(data) {
-			parseProject(JSON.parse(data.contents));
-		});
+
+		var request = new XMLHttpRequest();
+		request.open('GET', 'https://cors-anywhere.herokuapp.com/https://paiza.io/api' + urlPath + '.json');
+		request.onload = request.onerror = function() {
+			parseProject(JSON.parse(request.responseText));
+		};
+		request.send();
+
 	} else {
 		alert("You need to fill out all the inputs.");
 	}
