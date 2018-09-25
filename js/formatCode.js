@@ -7,15 +7,15 @@ var submitButton = document.querySelector('#submitButton');
 pdfMake.fonts = {
 	droidSerif: {
 		normal: 'droidSerif.ttf',
-		bold: 'droidSerifBold.ttf',
-		italics: 'droidSerifItalic.ttf',
-		bolditalics: 'droidSerifBoldItalic.ttf'
+		bold: 'droidSerif.ttf',
+		italics: 'droidSerif.ttf',
+		bolditalics: 'droidSerif.ttf'
 	},
 	courier: {
 		normal: 'courier.ttf',
 		bold: 'courierBold.ttf',
-		italics: 'courierItalic.ttf',
-		bolditalics: 'courierBoldItalic.ttf'
+		italics: 'courier.ttf',
+		bolditalics: 'courier.ttf'
 	}
 };
 
