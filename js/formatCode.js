@@ -7,6 +7,8 @@ var loadingDiv = document.querySelector('#loadingDiv');
 
 var partySound = new Audio('media/sound/partyHorn.ogg');
 
+var loading = false;
+
 pdfMake.fonts = {
 	droidSerif: {
 		normal: 'droidSerif.ttf',
@@ -25,6 +27,10 @@ pdfMake.fonts = {
 submitButton.addEventListener('click', submit);
 
 function submit() {
+	if (loading) {
+		return;
+	}
+
 	if (nameInput.value !== '' && blockInput.value !== '' && assignmentNumberInput.value !== '' && urlInput.value !== '') {
 		var anchor = document.createElement('a'); //this anchor element is used for parsing the URL, so that no complicated regex is needed
 
@@ -46,10 +52,12 @@ function submit() {
 			return;
 		}
 		loadingDiv.style.display = 'block'; //unhides the "loading..." message
+		loading = true;
 		var request = new XMLHttpRequest();
 		request.open('GET', 'https://cors-anywhere.herokuapp.com/https://paiza.io/api' + urlPath + '.json');
 		request.onload = request.onerror = function() {
 			loadingDiv.style.display = 'none'; //hides the "loading..." message
+			loading = false;
 			parseProject(JSON.parse(request.responseText));
 		};
 		request.send();
