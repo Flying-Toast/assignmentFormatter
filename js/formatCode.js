@@ -5,6 +5,8 @@ var urlInput = document.querySelector('#urlInput');
 var submitButton = document.querySelector('#submitButton');
 var loadingDiv = document.querySelector('#loadingDiv');
 
+var partySound = new Audio('media/sound/partyHorn.ogg');
+
 pdfMake.fonts = {
 	droidSerif: {
 		normal: 'droidSerif.ttf',
@@ -131,4 +133,10 @@ function makePdf(projectInfo) {
 	}
 
 	pdfMake.createPdf(docDefinition).download(`${nameInput.value.replace(" ","")}Assignment${assignmentNumberInput.value}.pdf`);
+	confetti({
+		particleCount: 180,
+		ticks: 500,
+		spread: 70
+	});
+	partySound.play();
 }
