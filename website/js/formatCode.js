@@ -24,6 +24,12 @@ pdfMake.fonts = {
 	}
 };
 
+urlInput.addEventListener('keydown', function(e) {
+	if (e.key === "Enter") {
+		submitButton.click();
+	}
+});
+
 submitButton.addEventListener('click', submit);
 
 function submit() {

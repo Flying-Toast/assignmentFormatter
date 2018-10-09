@@ -6,6 +6,12 @@ var alertBox = document.querySelector('#alert');
 var alertMessageDiv = document.querySelector('#alertMessage');
 var dismissAlert = document.querySelector('#dismissAlert');
 
+assignmentNumberInput.addEventListener('keydown', function(e) {
+	if (e.key === "Enter") {
+		submitButton.click();
+	}
+});
+
 submitButton.addEventListener('click', function() {
 	if (areInputsEmpty()) {
 		alertMessage("You need to fill out all the inputs.");
