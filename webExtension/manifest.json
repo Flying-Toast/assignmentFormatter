@@ -2,8 +2,8 @@
 	"manifest_version": 2,
 	"name": "Assignment Formatter",
 	"version": "1.0",
-
 	"description": "Formats programming homework assignments",
+	"homepage_url": "https://github.com/Flying-Toast/assignmentFormatter",
 
 	"icons": {
 		"48": "icons/icon48.png",
