@@ -110,6 +110,10 @@
 					content: '...';
 				}
 			}
+
+			#useExtension {
+				display: none;
+			}
 		</style>
 	</head>
 	<body>
@@ -149,12 +153,22 @@
 				</div>
 				<div id="loadingDiv">Loading</div>
 
+
 			</div>
+
+			<div id="useExtension">Using Firefox? Try the <a href="https://addons.mozilla.org/en-US/firefox/addon/assignment-formatter/">browser extension</a> - it's much faster.</div>
 
 			<div id="githubLink">
 				<a href="https://github.com/Flying-Toast/assignmentFormatter" target="_blank"><img src="media/images/githubLogo.svg" alt="Source on GitHub"></a>
 			</div>
 		</div>
+
+		<script>
+			if (navigator.userAgent.toLowerCase().includes("firefox")) {
+				document.querySelector('#useExtension').style.display = "block";
+			}
+		</script>
+
 		<script src='js/formatCode.js'></script>
 	</body>
 </html>
