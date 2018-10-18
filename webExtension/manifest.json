@@ -11,7 +11,8 @@
 	},
 
 	"permissions": [
-		"*://*.paiza.io/*"
+		"*://*.paiza.io/*",
+		"tabs"
 	],
 
 	"content_scripts": [{

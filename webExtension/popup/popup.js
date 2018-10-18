@@ -1,3 +1,17 @@
+browser.tabs.query({
+	currentWindow: true,
+	active: true
+}).then(function(tabs) {
+	let anchor = document.createElement("a");
+	anchor.href = tabs[0].url;
+	if (anchor.host !== "paiza.io") {
+		document.querySelector('#form').style.display = "none";
+		let message = document.createElement('div');
+		message.innerText = "You need to be on paiza.io to format an assignment.";
+		document.body.appendChild(message);
+	}
+});
+
 var nameInput = document.querySelector('#nameInput');
 var blockInput = document.querySelector('#blockInput');
 var assignmentNumberInput = document.querySelector('#assignmentNumberInput');
