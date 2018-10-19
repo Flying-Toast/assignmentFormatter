@@ -33,7 +33,7 @@ function submit() {
 	urlPath = anchor.pathname; //use the anchor element to extract the pathname from the url.
 
 	if (!(/^\/projects\/[^/]*$/.test(urlPath))) {
-		alert("Are you sure that you compiled at least once? (press the green \"Run\" button). The URL should be in the format paiza.io/projects/xxxx");
+		alert("Are you sure that you compiled at least once? (Press the green \"Run\" button).");
 		return;
 	}
 
