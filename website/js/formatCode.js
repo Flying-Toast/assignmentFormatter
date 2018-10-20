@@ -64,7 +64,6 @@ function submit() {
 		request.onload = request.onerror = function() {
 			loadingDiv.style.display = 'none'; //hides the "loading..." message
 			loading = false;
-			console.log(request.responseText);
 			parseProject(JSON.parse(request.responseText));
 		};
 		request.send();
