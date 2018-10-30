@@ -60,7 +60,7 @@ function submit() {
 		loadingDiv.style.display = 'block'; //unhides the "loading..." message
 		loading = true;
 		var request = new XMLHttpRequest();
-		request.open('GET', 'https://bypasscors.herokuapp.com/api/fetch/?url=https://paiza.io/api' + urlPath + '.json');
+		request.open('GET', 'https://cors-anywhere.herokuapp.com/https://paiza.io/api' + urlPath + '.json');
 		request.onload = request.onerror = function() {
 			loadingDiv.style.display = 'none'; //hides the "loading..." message
 			loading = false;
