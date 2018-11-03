@@ -1,0 +1,15 @@
+{
+  "name": "assignmentformatter",
+  "productName": "AssignmentFormatter",
+  "version": "1.0.0",
+  "description": "Formats programming homework assignments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Flying-Toast",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^3.0.7"
+  }
+}
