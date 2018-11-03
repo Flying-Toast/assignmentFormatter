@@ -41,6 +41,9 @@ function submit() {
 
 		let reader = new FileReader();
 		reader.addEventListener("loadend", function() {
+			if (fs.existsSync("/tmp/assignmentSource")) {
+				fs.unlinkSync("/tmp/assignmentSource");
+			}
 			fs.writeFileSync("/tmp/assignmentSource", reader.result);
 
 			let stdout;
