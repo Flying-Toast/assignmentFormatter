@@ -111,7 +111,7 @@
 				}
 			}
 
-			#useExtension {
+			#useExtension, #useDesktop {
 				display: none;
 			}
 		</style>
@@ -153,10 +153,10 @@
 				</div>
 				<div id="loadingDiv">Loading</div>
 
-
 			</div>
 
 			<div id="useExtension">Using Firefox? Try the <a href="https://addons.mozilla.org/en-US/firefox/addon/assignment-formatter/">browser extension</a> - it's much faster.</div>
+			<div id="useDesktop">There is also a <a id="downloadLink" href="https://github.com/Flying-Toast/assignmentFormatter/releases/download/v1.0.0/AssignmentFormatter-macOSX.zip">desktop app</a> if you didn't use paiza.</div>
 
 			<div id="githubLink">
 				<a href="https://github.com/Flying-Toast/assignmentFormatter" target="_blank"><img src="media/images/githubLogo.svg" alt="Source on GitHub"></a>
@@ -164,6 +164,12 @@
 		</div>
 
 		<script>
+			if (navigator.userAgent.toLowerCase().includes("linux") || navigator.userAgent.toLowerCase().includes("mac")) {
+				if (navigator.userAgent.toLowerCase().includes("linux")) {
+					document.querySelector("#downloadLink").href = "https://github.com/Flying-Toast/assignmentFormatter/releases/download/v1.0.0/AssignmentFormatter-linux-x64.zip";
+				}
+				document.querySelector('#useDesktop').style.display = "block";
+			}
 			if (navigator.userAgent.toLowerCase().includes("firefox")) {
 				document.querySelector('#useExtension').style.display = "block";
 			}
