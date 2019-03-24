@@ -17,7 +17,7 @@
 
 	"content_scripts": [{
 		"matches": ["*://*.paiza.io/*"],
-		"js": ["contentScripts/libs.js", "contentScripts/vfs_fonts.js", "contentScripts/formatCode.js"]
+		"js": ["contentScripts/pdfmake.js", "contentScripts/vfs_fonts.js", "contentScripts/formatCode.js"]
 	}],
 
 	"browser_action": {
