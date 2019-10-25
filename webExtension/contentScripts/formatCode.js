@@ -54,7 +54,7 @@ function parseProject(project) {
 		return;
 	}
 	var projectInfo = {};
-	projectInfo.header = `${userInfo.name}, ${userInfo.block} Block, Assignment ${userInfo.assignmentNumber}`;
+	projectInfo.header = `${userInfo.name}, ${userInfo.block} Block, Assignment: ${userInfo.assignmentNumber}`;
 	projectInfo.sources = project.source_files;
 	projectInfo.output = project.stdout;
 	makePdf(projectInfo);
