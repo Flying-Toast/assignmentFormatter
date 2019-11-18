@@ -1,13 +1,13 @@
-var nameInput = document.querySelector('#nameInput');
-var blockInput = document.querySelector('#blockInput');
-var assignmentNumberInput = document.querySelector('#assignmentNumberInput');
-var urlInput = document.querySelector('#urlInput');
-var submitButton = document.querySelector('#submitButton');
-var loadingDiv = document.querySelector('#loadingDiv');
+let nameInput = document.querySelector('#nameInput');
+let blockInput = document.querySelector('#blockInput');
+let assignmentNumberInput = document.querySelector('#assignmentNumberInput');
+let urlInput = document.querySelector('#urlInput');
+let submitButton = document.querySelector('#submitButton');
+let loadingDiv = document.querySelector('#loadingDiv');
 
-var partySound = new Audio('media/sound/partyHorn.ogg');
+let partySound = new Audio('media/sound/partyHorn.ogg');
 
-var loading = false;
+let loading = false;
 
 pdfMake.fonts = {
 	droidSerif: {
@@ -38,9 +38,9 @@ function submit() {
 	}
 
 	if (nameInput.value !== '' && blockInput.value !== '' && assignmentNumberInput.value !== '' && urlInput.value !== '') {
-		var anchor = document.createElement('a'); //this anchor element is used for parsing the URL, so that no complicated regex is needed
+		let anchor = document.createElement('a'); //this anchor element is used for parsing the URL, so that no complicated regex is needed
 
-		var url;
+		let url;
 
 		if (!(/^http.*/.test(urlInput.value))) { //checks if the protocol is missing from the supplied url, and adds one if it is
 			url = "https://" + urlInput.value;
@@ -59,7 +59,7 @@ function submit() {
 		}
 		loadingDiv.style.display = 'block'; //unhides the "loading..." message
 		loading = true;
-		var request = new XMLHttpRequest();
+		let request = new XMLHttpRequest();
 		request.open('GET', 'https://non-cors.herokuapp.com/' + "https://paiza.io/api" + urlPath + '.json');
 		request.onload = request.onerror = function() {
 			loadingDiv.style.display = 'none'; //hides the "loading..." message
@@ -78,7 +78,7 @@ function parseProject(project) {
 		alert("You need to fix the errors in your code and try again.");
 		return;
 	}
-	var projectInfo = {};
+	let projectInfo = {};
 	projectInfo.header = `${nameInput.value}, ${blockInput.value} Block, Assignment: ${assignmentNumberInput.value}`;
 	projectInfo.sources = project.source_files;
 	projectInfo.output = project.stdout;
@@ -87,7 +87,7 @@ function parseProject(project) {
 
 function makePdf(projectInfo) {
 
-	var docContent = [{
+	let docContent = [{
 		text: projectInfo.header,
 		style: 'header'
 	}, {
@@ -101,8 +101,8 @@ function makePdf(projectInfo) {
 			style: 'body'
 		});
 	} else {
-		for (var i = 0; i < projectInfo.sources.length; i++) {
-			var source = projectInfo.sources[i];
+		for (let i = 0; i < projectInfo.sources.length; i++) {
+			let source = projectInfo.sources[i];
 
 			docContent.push({
 				text: `\n${File.headerText()}`, //for multiple source files, a header is added before each file
@@ -125,7 +125,7 @@ function makePdf(projectInfo) {
 		style: 'body'
 	});
 
-	var docDefinition = {
+	let docDefinition = {
 		content: docContent,
 		styles: {
 			header: {
