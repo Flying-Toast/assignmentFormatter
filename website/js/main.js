@@ -105,7 +105,7 @@ function makePdf(projectInfo) {
 			var source = projectInfo.sources[i];
 
 			docContent.push({
-				text: `\nIn file ${source.filename}:`, //for multiple source files, a header is added before each file
+				text: `\n${File.headerText()}`, //for multiple source files, a header is added before each file
 				style: ['body', 'label']
 			});
 
