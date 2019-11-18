@@ -48,8 +48,8 @@ input[type="text"] {
 
 #githubLink, #githubIcon {
 	position: absolute;
-	bottom: 0;
-	right: 0;
+	bottom: 3px;
+	right: 3px;
 }
 
 button {
