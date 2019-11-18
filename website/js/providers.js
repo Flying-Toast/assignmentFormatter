@@ -25,7 +25,12 @@ class Project {
 
 class Provider {
 	constructor(url) {
-		this.url = url;
+		//adds a protocol to the url if missing
+		if (!(/^http.*/.test(url))) {
+			this.url = `https://${url}`
+		} else {
+			this.url = urlInput.value;
+		}
 	}
 
 	/*
@@ -42,9 +47,11 @@ class Provider {
 	--override this--
 
 	*Synchronously* retrieves the project information from the
-		provider website and converts it to a `Project`
+		provider website and converts it to a `Project` to be
+		retrieved by the `getProject` function.
+	Calls `cb()` after the fetch is done.
 	*/
-	fetch() {
+	fetch(cb) {
 		throw new Error("Override this.");
 	}
 
@@ -55,5 +62,34 @@ class Provider {
 	*/
 	getProject() {
 		throw new Error("Override this.");
+	}
+}
+
+class PaizaProvider extends Provider {
+	constructor(url) {
+		super(url);
+	}
+
+	validateURL() {
+		let anchor = document.createElement("a");
+		anchor.href = this.url;
+		let urlPath = anchor.pathname;
+
+		if (anchor.host !== "paiza.io" || !(/^\/projects\/[^/]*$/.test(urlPath))) {
+			return false;
+		}
+
+		return true;
+	}
+
+	fetch(cb) {
+		let request = new XMLHttpRequest();
+		request.open("GET", "https://non-cors.herokuapp.com/" + "https://paiza.io/api" + urlPath + ".json");
+		request.onload = request.onerror = function() {
+			//TODO: create this.project
+
+			cb();
+		};
+		request.send();
 	}
 }
