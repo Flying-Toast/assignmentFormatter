@@ -37,26 +37,27 @@ function submit() {
 		return;
 	}
 
-	if (nameInput.value !== '' && blockInput.value !== '' && assignmentNumberInput.value !== '' && urlInput.value !== '') {
-		//TODO: dont hard-code the provider
-		let provider = new PaizaProvider(urlInput.value);
-
-		if (!provider.validateURL()) {
-			alert("The project URL is invalid.");
-			return;
-		}
-
-		loadingDiv.style.display = 'block';
-		loading = true;
-
-		provider.fetch(function() {
-			loadingDiv.style.display = 'none';
-			loading = false;
-			parseProject(JSON.parse(request.responseText));
-		});
-	} else {
+	if (!nameInput.value || !blockInput.value || !assignmentNumberInput.value || !urlInput.value) {
 		alert("You need to fill out all the inputs.");
+		return;
 	}
+
+	//TODO: dont hard-code the provider
+	let provider = new PaizaProvider(urlInput.value);
+
+	if (!provider.validateURL()) {
+		alert("The project URL is invalid.");
+		return;
+	}
+
+	loadingDiv.style.display = 'block';
+	loading = true;
+
+	provider.fetch(function() {
+		loadingDiv.style.display = 'none';
+		loading = false;
+		parseProject(JSON.parse(request.responseText));
+	});
 }
 
 function parseProject(project) {
