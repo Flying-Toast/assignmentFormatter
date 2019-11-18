@@ -38,36 +38,22 @@ function submit() {
 	}
 
 	if (nameInput.value !== '' && blockInput.value !== '' && assignmentNumberInput.value !== '' && urlInput.value !== '') {
-		let anchor = document.createElement('a'); //this anchor element is used for parsing the URL, so that no complicated regex is needed
+		//TODO: dont hard-code the provider
+		let provider = new PaizaProvider(urlInput.value);
 
-		let url;
-
-		if (!(/^http.*/.test(urlInput.value))) { //checks if the protocol is missing from the supplied url, and adds one if it is
-			url = "https://" + urlInput.value;
-		} else {
-			url = urlInput.value;
-		}
-		anchor.href = url;
-
-		urlPath = anchor.pathname; //use the anchor element to extract the pathname from the url.
-		if (anchor.host !== "paiza.io") {
-			alert("You need to enter a valid paiza.io URL.");
-			return;
-		} else if (!(/^\/projects\/[^/]*$/.test(urlPath))) {
-			alert("Are you sure that you compiled at least once? (press the green \"Run\" button). The URL should be in the format paiza.io/projects/xxxx");
+		if (!provider.validateURL()) {
+			alert("The project URL is invalid.");
 			return;
 		}
-		loadingDiv.style.display = 'block'; //unhides the "loading..." message
+
+		loadingDiv.style.display = 'block';
 		loading = true;
-		let request = new XMLHttpRequest();
-		request.open('GET', 'https://non-cors.herokuapp.com/' + "https://paiza.io/api" + urlPath + '.json');
-		request.onload = request.onerror = function() {
-			loadingDiv.style.display = 'none'; //hides the "loading..." message
+
+		provider.fetch(function() {
+			loadingDiv.style.display = 'none';
 			loading = false;
 			parseProject(JSON.parse(request.responseText));
-		};
-		request.send();
-
+		});
 	} else {
 		alert("You need to fill out all the inputs.");
 	}
@@ -86,7 +72,6 @@ function parseProject(project) {
 }
 
 function makePdf(projectInfo) {
-
 	let docContent = [{
 		text: projectInfo.header,
 		style: 'header'
