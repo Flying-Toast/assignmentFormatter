@@ -69,7 +69,7 @@ function submit() {
 			return;
 		}
 
-		let doc = makePDFContents(provider.getProject());
+		let doc = makePDFContents(project);
 		pdfMake.createPdf(doc)
 			.download(`${nameInput.value.replace(" ","")}Assignment${assignmentNumberInput.value}.pdf`);
 
