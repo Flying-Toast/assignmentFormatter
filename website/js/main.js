@@ -1,36 +1,44 @@
-let nameInput = document.querySelector('#nameInput');
-let blockInput = document.querySelector('#blockInput');
-let assignmentNumberInput = document.querySelector('#assignmentNumberInput');
-let urlInput = document.querySelector('#urlInput');
-let submitButton = document.querySelector('#submitButton');
-let loadingDiv = document.querySelector('#loadingDiv');
-
-let partySound = new Audio('media/sound/partyHorn.ogg');
+let nameInput = document.querySelector("#nameInput");
+let blockInput = document.querySelector("#blockInput");
+let assignmentNumberInput = document.querySelector("#assignmentNumberInput");
+let urlInput = document.querySelector("#urlInput");
+let submitButton = document.querySelector("#submitButton");
+let loadingDiv = document.querySelector("#loadingDiv");
 
 let loading = false;
 
 pdfMake.fonts = {
 	droidSerif: {
-		normal: 'droidSerif.ttf',
-		bold: 'droidSerif.ttf',
-		italics: 'droidSerif.ttf',
-		bolditalics: 'droidSerif.ttf'
+		normal: "droidSerif.ttf",
+		bold: "droidSerif.ttf",
+		italics: "droidSerif.ttf",
+		bolditalics: "droidSerif.ttf"
 	},
 	courier: {
-		normal: 'courier.ttf',
-		bold: 'courierBold.ttf',
-		italics: 'courier.ttf',
-		bolditalics: 'courier.ttf'
+		normal: "courier.ttf",
+		bold: "courierBold.ttf",
+		italics: "courier.ttf",
+		bolditalics: "courier.ttf"
 	}
 };
 
-urlInput.addEventListener('keydown', function(e) {
+urlInput.addEventListener("keydown", function(e) {
 	if (e.key === "Enter") {
 		submitButton.click();
 	}
 });
 
-submitButton.addEventListener('click', submit);
+submitButton.addEventListener("click", submit);
+
+function hideLoader() {
+	loadingDiv.style.display = "none";
+	loading = false;
+}
+
+function showLoader() {
+	loadingDiv.style.display = "block";
+	loading = true;
+}
 
 function submit() {
 	if (loading) {
@@ -50,69 +58,66 @@ function submit() {
 		return;
 	}
 
-	loadingDiv.style.display = 'block';
-	loading = true;
+	showLoader();
 
 	provider.fetch(function() {
-		loadingDiv.style.display = 'none';
-		loading = false;
-		parseProject(JSON.parse(request.responseText));
+		hideLoader();
+
+		let project = provider.getProject();
+		if (!project.buildSucceeded) {
+			alert("You need to fix the errors in your code and try again.");
+			return;
+		}
+
+		let doc = makePDFContents(provider.getProject());
+		pdfMake.createPdf(doc)
+			.download(`${nameInput.value.replace(" ","")}Assignment${assignmentNumberInput.value}.pdf`);
+
+		celebrate();
 	});
 }
 
-function parseProject(project) {
-	if (project.build_result !== "success") {
-		alert("You need to fix the errors in your code and try again.");
-		return;
-	}
-	let projectInfo = {};
-	projectInfo.header = `${nameInput.value}, ${blockInput.value} Block, Assignment: ${assignmentNumberInput.value}`;
-	projectInfo.sources = project.source_files;
-	projectInfo.output = project.stdout;
-	makePdf(projectInfo);
-}
+function makePDFContents(project) {
+	let header = `${nameInput.value}, ${blockInput.value} Block, Assignment: ${assignmentNumberInput.value}`;
 
-function makePdf(projectInfo) {
-	let docContent = [{
-		text: projectInfo.header,
-		style: 'header'
+	let doc = [{
+		text: header,
+		style: "header"
 	}, {
 		text: "\nMY CODE:",
-		style: ['body', 'label']
+		style: ["body", "label"]
 	}];
 
-	if (projectInfo.sources.length === 1) { //if there is only one source file, add it to the docContent without a header
-		docContent.push({
-			text: '\n' + projectInfo.sources[0].body,
-			style: 'body'
+	//if there is only one source file, add it to the document without a header
+	if (project.files.length === 1) {
+		doc.push({
+			text: `\n${project.files[0].contents}`,
+			style: "body"
 		});
 	} else {
-		for (let i = 0; i < projectInfo.sources.length; i++) {
-			let source = projectInfo.sources[i];
-
-			docContent.push({
-				text: `\n${File.headerText()}`, //for multiple source files, a header is added before each file
-				style: ['body', 'label']
+		for (let file of project.files) {
+			doc.push({
+				text: `\n${file.headerText()}`, //for multiple source files, a header is added before each file
+				style: ["body", "label"]
 			});
 
-			docContent.push({
-				text: '\n' + source.body,
-				style: 'body'
+			doc.push({
+				text: `\n${file.contents}`,
+				style: "body"
 			});
-
 		}
 	}
 
-	docContent.push({
+	doc.push({
 		text: "\nRESULTS:",
-		style: ['body', 'label']
+		style: ["body", "label"]
 	}, {
-		text: '\n' + projectInfo.output,
-		style: 'body'
+		text: "\n" + project.output,
+		style: "body"
 	});
 
-	let docDefinition = {
-		content: docContent,
+	return {
+		content: doc,
 		styles: {
 			header: {
 				fontSize: 18
@@ -121,22 +126,23 @@ function makePdf(projectInfo) {
 				bold: true
 			},
 			body: {
-				font: 'courier',
+				font: "courier",
 				preserveLeadingSpaces: true,
 				fontSize: 10
 			}
 		},
 		defaultStyle: {
-			font: 'droidSerif'
+			font: "droidSerif"
 		},
-		pageSize: 'LETTER'
-	}
+		pageSize: "LETTER"
+	};
+}
 
-	pdfMake.createPdf(docDefinition).download(`${nameInput.value.replace(" ","")}Assignment${assignmentNumberInput.value}.pdf`);
+function celebrate() {
 	confetti({
 		particleCount: 180,
 		ticks: 500,
 		spread: 70
 	});
-	partySound.play();
+	(new Audio("media/sound/partyHorn.ogg")).play();
 }
