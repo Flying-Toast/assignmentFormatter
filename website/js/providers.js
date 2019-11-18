@@ -65,17 +65,27 @@ class Provider {
 	}
 }
 
+
+
+
+
 class PaizaProvider extends Provider {
 	constructor(url) {
 		super(url);
 	}
 
+	getURLPath() {
+		let anchor = document.createElement("a");
+		anchor.href = this.url;
+
+		return anchor.pathname;
+	}
+
 	validateURL() {
 		let anchor = document.createElement("a");
 		anchor.href = this.url;
-		let urlPath = anchor.pathname;
 
-		if (anchor.host !== "paiza.io" || !(/^\/projects\/[^/]*$/.test(urlPath))) {
+		if (anchor.host !== "paiza.io" || !(/^\/projects\/[^/]*$/.test(this.getURLPath()))) {
 			return false;
 		}
 
@@ -84,12 +94,24 @@ class PaizaProvider extends Provider {
 
 	fetch(cb) {
 		let request = new XMLHttpRequest();
-		request.open("GET", "https://non-cors.herokuapp.com/" + "https://paiza.io/api" + urlPath + ".json");
+		request.open("GET", "https://non-cors.herokuapp.com/" + "https://paiza.io/api" + this.getURLPath() + ".json");
 		request.onload = request.onerror = function() {
-			//TODO: create this.project
+			let res = JSON.parse(request.responseText);
+
+			let files = [];
+			for (let i of res.source_files) {
+				files.push(new File(i.filename, i.body));
+			}
+			let success = (res.build_result === "success");
+
+			this.project = new Project(files, success, res.stdout);
 
 			cb();
-		};
+		}.bind(this);
 		request.send();
+	}
+
+	getProject() {
+		return this.project;
 	}
 }
