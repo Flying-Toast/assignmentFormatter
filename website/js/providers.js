@@ -46,9 +46,10 @@ class Provider {
 	/*
 	--override this--
 
-	*Synchronously* retrieves the project information from the
-		provider website and converts it to a `Project` to be
+	Retrieves the project information from the provider
+		website and converts it to a `Project` to be
 		retrieved by the `getProject` function.
+
 	Calls `cb()` after the fetch is done.
 	*/
 	fetch(cb) {
