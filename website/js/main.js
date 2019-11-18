@@ -138,11 +138,12 @@ function makePDFContents(project) {
 	};
 }
 
+let partySound = new Audio("media/sound/partyHorn.ogg");
 function celebrate() {
 	confetti({
 		particleCount: 180,
 		ticks: 500,
 		spread: 70
 	});
-	(new Audio("media/sound/partyHorn.ogg")).play();
+	partySound.play();
 }
