@@ -50,10 +50,15 @@ function submit() {
 		return;
 	}
 
-	//TODO: dont hard-code the provider
-	let provider = new PaizaProvider(urlInput.value);
+	let provider = null;
+	for (let i = 0; i < availableProviders.length; i++) {
+		if (availableProviders[i].canHandleURL(urlInput.value)) {
+			provider = new availableProviders[i](urlInput.value);
+			break;
+		}
+	}
 
-	if (!provider.validateURL()) {
+	if (provider === null) {
 		alert("The project URL is invalid.");
 		return;
 	}

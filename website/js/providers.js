@@ -23,6 +23,13 @@ class Project {
 	}
 }
 
+function getURLPath(url) {
+	let anchor = document.createElement("a");
+	anchor.href = url;
+
+	return anchor.pathname;
+}
+
 class Provider {
 	constructor(url) {
 		//adds a protocol to the url if missing
@@ -34,14 +41,15 @@ class Provider {
 	}
 
 	/*
-	--override this--
+	--implement this--
 
-	Checks if the URL is valid for this provider.
+	static canHandleURL(url) {
+		//...
+	}
+
+	Whether or not the URL is valid for this provider.
 	Returns: bool
 	*/
-	validateURL() {
-		throw new Error("Override this.");
-	}
 
 	/*
 	--override this--
@@ -69,24 +77,16 @@ class Provider {
 
 
 
-
 class PaizaProvider extends Provider {
 	constructor(url) {
 		super(url);
 	}
 
-	getURLPath() {
+	static canHandleURL(url) {
 		let anchor = document.createElement("a");
-		anchor.href = this.url;
+		anchor.href = url;
 
-		return anchor.pathname;
-	}
-
-	validateURL() {
-		let anchor = document.createElement("a");
-		anchor.href = this.url;
-
-		if (anchor.host !== "paiza.io" || !(/^\/projects\/[^/]*$/.test(this.getURLPath()))) {
+		if (anchor.host !== "paiza.io" || !(/^\/projects\/[^/]*$/.test(getURLPath(url)))) {
 			return false;
 		}
 
@@ -95,7 +95,7 @@ class PaizaProvider extends Provider {
 
 	fetch(cb) {
 		let request = new XMLHttpRequest();
-		request.open("GET", "https://non-cors.herokuapp.com/" + "https://paiza.io/api" + this.getURLPath() + ".json");
+		request.open("GET", "https://non-cors.herokuapp.com/" + "https://paiza.io/api" + getURLPath(this.url) + ".json");
 		request.onload = request.onerror = function() {
 			let res = JSON.parse(request.responseText);
 
@@ -116,3 +116,6 @@ class PaizaProvider extends Provider {
 		return this.project;
 	}
 }
+
+//All providers should be in this array.
+const availableProviders = [PaizaProvider];
