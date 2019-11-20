@@ -50,10 +50,16 @@ function submit() {
 		return;
 	}
 
+	let url = urlInput.value;
+	//add protocol to url if missing
+	if (!(/^http.*/.test(url))) {
+		url = `https://${url}`;
+	}
+	
 	let provider = null;
 	for (let i = 0; i < availableProviders.length; i++) {
-		if (availableProviders[i].canHandleURL(urlInput.value)) {
-			provider = new availableProviders[i](urlInput.value);
+		if (availableProviders[i].canHandleURL(url)) {
+			provider = new availableProviders[i](url);
 			break;
 		}
 	}
