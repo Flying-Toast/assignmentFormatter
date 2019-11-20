@@ -32,12 +32,7 @@ function getURLPath(url) {
 
 class Provider {
 	constructor(url) {
-		//adds a protocol to the url if missing
-		if (!(/^http.*/.test(url))) {
-			this.url = `https://${url}`
-		} else {
-			this.url = urlInput.value;
-		}
+		this.url = url;
 	}
 
 	/*
