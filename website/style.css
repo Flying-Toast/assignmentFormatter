@@ -38,10 +38,6 @@ input[type="text"] {
 	text-align: center;
 }
 
-#nameInput {
-	width: 20ch;
-}
-
 #githubLink, #githubIcon {
 	position: absolute;
 	bottom: 3px;
